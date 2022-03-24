@@ -70,7 +70,8 @@ correct - it should have 20 columns, including the “name” column from
 the airlines data frame.
 
 ``` r
-#Because the columns I am joining are called "carrier" in both data frames and there are no other duplicate variables in the data frames I will not need to specify the by argument for the function inner_join() - a natural join will be performed on "carrier" by default. 
+#Because the columns I am joining are called "carrier" in both data frames and there are no other
+#duplicate variables in the data frames I will not need to specify the by argument for the #function inner_join() - a natural join will be performed on "carrier" by default. 
 flights_airlines <- inner_join(x=flights, y=airlines)
 ```
 
@@ -108,8 +109,14 @@ with the airports data frame on the columns containing the FAA airport
 code and to create the new data frame joined\_flight.dt.
 
 ``` r
-#I need to specify the columns to join on since they do not have the same variable name. To do this I will simply include the by argument in the inner_join() function. There is also a duplicate variable that I do not want to join in our data frames ("name"), so I need to also include the suffix argument in order to disambiguate the columns containing the names of the airlines from the column containing the names of the airports.  
-joined_flight.dt <- inner_join(flights_airlines, airports, by = c("origin" = "faa"), suffix = c("_airline", "_airport"))
+#I need to specify the columns to join on since they do not have the same variable name.
+#To do this I will simply include the by argument in the inner_join() function. 
+#There is also a duplicate variable that I do not want to join in our data frames ("name")
+#so, I need to also include the suffix argument in order to disambiguate the columns containing #the names of the airlines from the column containing the names of the airports.  
+joined_flight.dt <- inner_join(flights_airlines, 
+                               airports, 
+                               by = c("origin" = "faa"),
+                               suffix = c("_airline", "_airport"))
 ```
 
 Now I will check the structure of joined\_flight.dt to make sure it has
@@ -157,7 +164,8 @@ delays. I will check to make sure the dep\_delay.dt data frame contains
 the correct three variables before performing the analysis.
 
 ``` r
-dep_delay.dt <- joined_flight.dt %>% select(name_airline, name_airport, dep_delay)
+dep_delay.dt <- joined_flight.dt %>%
+  select(name_airline, name_airport, dep_delay)
 glimpse(dep_delay.dt)
 ```
 
@@ -174,8 +182,10 @@ order to find which combination of airline and airport has the smallest
 average departure delay.
 
 ``` r
-#To calculate the average departure delay across my grouped data, I will use the summarize() with nested round() and mean() functions, and the specified .groups argument to ensure that the grouping is passed through. Nothing needs to be specified for arrange() to sort in ascending order as that is the default for the function.
-dep_delay.dt %>% group_by(name_airline, name_airport) %>% 
+#To calculate the average departure delay across my grouped data, I will use summarize() with #nested round() and mean() functions, and the specified .groups argument to ensure that the #grouping is passed through. 
+#Nothing needs to be specified for arrange() to sort in ascending order as that is the default.
+dep_delay.dt %>%
+  group_by(name_airline, name_airport) %>% 
   summarize(avg_dep_delay = round(mean(dep_delay, na.rm=TRUE),2), .groups = "keep") %>%
   arrange(avg_dep_delay) 
 ```
