@@ -113,8 +113,7 @@ code and to create the new data frame joined\_flight.dt.
 #I need to specify the columns to join on since they do not have the same variable name.    
 #To do this I will simply include the by argument in the inner_join() function.  
 #There is also a duplicate variable that I do not want to join in our data frames ("name")  
-#so, I need to also include the suffix argument in order to disambiguate the columns containing  
-#the names of the airlines from the column containing the names of the airports.  
+#so, I need to also include the suffix argument in order to disambiguate the columns.
 joined_flight.dt <- inner_join(flights_airlines, 
                                airports, 
                                by = c("origin" = "faa"),
