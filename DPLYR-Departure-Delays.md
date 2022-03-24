@@ -113,7 +113,8 @@ code and to create the new data frame joined\_flight.dt.
 #I need to specify the columns to join on since they do not have the same variable name.    
 #To do this I will simply include the by argument in the inner_join() function.  
 #There is also a duplicate variable that I do not want to join in our data frames ("name")  
-#so, I need to also include the suffix argument in order to disambiguate the columns containing   #the names of the airlines from the column containing the names of the airports.  
+#so, I need to also include the suffix argument in order to disambiguate the columns containing  
+#the names of the airlines from the column containing the names of the airports.  
 joined_flight.dt <- inner_join(flights_airlines, 
                                airports, 
                                by = c("origin" = "faa"),
@@ -183,7 +184,9 @@ order to find which combination of airline and airport has the smallest
 average departure delay.
 
 ``` r
-#To calculate the average departure delay across my grouped data, I will use summarize() with   #nested round() and mean() functions, and the specified .groups argument to ensure that the   #grouping is passed through.  
+#To calculate the average departure delay across my grouped data, I will use summarize() with  
+#nested round() and mean() functions, and the specified .groups argument to ensure that the  
+#grouping is passed through.  
 #Nothing needs to be specified for arrange() to sort in ascending order as that is the default.  
 dep_delay.dt %>%
   group_by(name_airline, name_airport) %>% 
