@@ -114,8 +114,8 @@ code and to create the new data frame joined\_flight.dt.
 #To do this I will simply include the by argument in the inner_join() function.  
 #There is also a duplicate variable that I do not want to join in our data frames ("name")  
 #so, I need to also include the suffix argument in order to disambiguate the columns.
-joined_flight.dt <- inner_join(flights_airlines, 
-                               airports, 
+joined_flight.dt <- inner_join(x=flights_airlines, 
+                               y=airports, 
                                by = c("origin" = "faa"),
                                suffix = c("_airline", "_airport"))
 ```
@@ -158,10 +158,10 @@ glimpse(joined_flight.dt)
     ## $ dst            <chr> "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", …
     ## $ tzone          <chr> "America/New_York", "America/New_York", "America/New_Yo…
 
-The last data frame I create, dep\_delay.dt, will be used for my
+The last data frame I create, dep_delay.dt, will be used for my
 analysis and will include only the variables I am interested in - the
 names of the airlines, the names of the airports, and the departure
-delays. I will check to make sure the dep\_delay.dt data frame contains
+delays. I will check to make sure the dep_delay.dt data frame contains
 the correct three variables before performing the analysis.
 
 ``` r
@@ -184,7 +184,7 @@ average departure delay.
 
 ``` r
 #To calculate the average departure delay across my grouped data, I will use summarize() with  
-#nested round() and mean() functions, and the specified .groups argument to ensure that the  
+#nested round() and mean() functions, and specify the .groups argument to ensure that the  
 #grouping is passed through.  
 #Nothing needs to be specified for arrange() to sort in ascending order as that is the default.  
 dep_delay.dt %>%
@@ -213,9 +213,8 @@ So there we have it! It seems that US Airways is the best airline to fly
 out of NYC on if you want to avoid significant departure delays.
 
 Of course, there are several variables that could affect delays and we
-could go much deeper into our analysis. of seasonal and day-to-day
-variances in the departure delays. This data is also nearly a decade
+could go much deeper into our analysis. This data is also nearly a decade
 old, and was obviously not subject to the affects of COVID-19 on the
 airline industry, so it is likely no longer relevant to finding the true
 answer to our question - that being said, it has provided great practice
-with the dplyr package!
+with the {dplyr} package!
